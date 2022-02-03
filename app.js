@@ -25,6 +25,7 @@ const topics = [
   'bit-manipulation',
 ];
 
+// Get Random Topic
 const getRandomTopic = (topics) => {
   const randomIndex = Math.floor(Math.random() * topics.length);
   return topics[randomIndex];
@@ -67,6 +68,29 @@ app.get('/:path', (req, res) => {
         const json = JSON.parse(data);
         const result = json.data[path];
         res.status(200).json(result);
+      }
+    });
+  } else {
+    res.status(404).json({
+      data: {
+        message: 'Invalid path',
+      },
+    });
+  }
+});
+
+// Get Random Problem from a topic
+app.get('/:path/random', (req, res) => {
+  const path = req.params.path;
+  if (topics.indexOf(path) !== -1) {
+    fs.readFile(dataPath, 'utf-8', (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        const json = JSON.parse(data);
+        const result = json.data[path];
+        const position = Math.floor(Math.random() * result.length);
+        res.status(200).json(result[position]);
       }
     });
   } else {
