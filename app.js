@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 // Get Random Problem
-app.get('/random', (req, res, next) => {
+app.get('/random', (req, res) => {
   const topic = getRandomTopic(topics);
   fs.readFile(dataPath, 'utf-8', (err, data) => {
     if (err) {
@@ -52,7 +52,6 @@ app.get('/random', (req, res, next) => {
       const result = json;
       const position = Math.floor(Math.random() * result.data[topic].length);
       res.status(200).json(result.data[topic][position]);
-      next();
     }
   });
 });
@@ -60,15 +59,23 @@ app.get('/random', (req, res, next) => {
 // Get problems based on topic
 app.get('/:path', (req, res) => {
   const path = req.params.path;
-  fs.readFile(dataPath, 'utf-8', (err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      const json = JSON.parse(data);
-      const result = json[path];
-      res.status(200).json(result);
-    }
-  });
+  if (topics.indexOf(path) !== -1) {
+    fs.readFile(dataPath, 'utf-8', (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        const json = JSON.parse(data);
+        const result = json.data[path];
+        res.status(200).json(result);
+      }
+    });
+  } else {
+    res.status(404).json({
+      data: {
+        message: 'Invalid path',
+      },
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
