@@ -1,3 +1,5 @@
+![Babbar's DSA](https://i.ibb.co/RPQmqHk/BABBAR-s-DSA-API.gif)
+
 ## Babbar's DSA API
 
 This code is an API version of the [DSA sheet](https://drive.google.com/file/d/1FMdN_OCfOI0iAeDlqswCiC2DZzD4nPsb/view) provided by [Love Babbar](https://www.youtube.com/channel/UCQHLxxBFrbfdrk1jF0moTpw) on his [YouTube video](https://www.youtube.com/watch?v=4iFALQ1ACdA). Currently, the API and the sheet consists of 448 questions from the following topics:
